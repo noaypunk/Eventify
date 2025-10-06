@@ -1,4 +1,4 @@
-package com.teampura.eventify.UserEntity;
+package com.teampura.eventify.PaymentEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -6,16 +6,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class User {
+public class payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private long userID;
-    private String fname;
-    private String lname;
-    private String email;
-    private int mobileNum;
-    private String password;
-    
+    private long paymentID;
 
 }
