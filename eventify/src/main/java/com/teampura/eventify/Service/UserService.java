@@ -1,7 +1,7 @@
-package com.teampura.eventify.Service;
+package com.teampura.eventify.service;
 
-import com.teampura.eventify.Entity.UserEntity.User;
 import com.teampura.eventify.Repository.UserRepository;
+import com.teampura.eventify.entity.UserEntity.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,4 +49,11 @@ public class UserService {
         userRepository.deleteById(userID);
 
     }
+
+    public User login(String email, String password) {
+    return userRepository.findByEmail(email)
+            .filter(user -> user.getPassword().equals(password))
+            .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+    }
+
 }

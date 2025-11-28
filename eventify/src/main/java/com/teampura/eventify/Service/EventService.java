@@ -1,7 +1,8 @@
-package com.teampura.eventify.Service;
+package com.teampura.eventify.service;
 
-import com.teampura.eventify.Entity.EventEntity.event;
 import com.teampura.eventify.Repository.EventRepository;
+import com.teampura.eventify.entity.EventEntity.event;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;

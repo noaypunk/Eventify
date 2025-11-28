@@ -1,7 +1,8 @@
 package com.teampura.eventify.Controller;
 
-import com.teampura.eventify.Entity.EventEntity.event;
-import com.teampura.eventify.Service.EventService;
+import com.teampura.eventify.entity.EventEntity.event;
+import com.teampura.eventify.service.EventService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

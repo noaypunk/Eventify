@@ -1,8 +1,9 @@
-package com.teampura.eventify.Entity.FeedbackEntity;
+package com.teampura.eventify.entity.FeedbackEntity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import com.teampura.eventify.Entity.UserEntity.User;
+
+import com.teampura.eventify.entity.UserEntity.User;
 
 @Entity
 public class feedback {

@@ -1,0 +1,222 @@
+/* === Global Reset === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* === Page Background === */
+body, html {
+  height: 100%;
+  background: linear-gradient(to bottom, #77A0DE, #ffffff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* === Split Container === */
+.split-container {
+  display: flex;
+  flex-direction: row; /* LEFT-IMAGE RIGHT-FORM */
+  width: 900px;
+  max-width: 95%;
+  height: 600px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* === Image Panel (Left Side) === */
+.image-panel {
+  width: 50%;
+  min-width: 300px;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+/* === Form Panel (Right Side) === */
+.form-panel {
+  position: relative; /* needed for absolute positioning inside */
+  width: 50%;
+  min-width: 300px;
+  height: 100%;
+  background: #fff;
+  padding: 30px 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+}
+
+/* Home icon in top-left corner of form panel */
+.home-icon {
+  position: absolute;
+  top: 15px;   /* distance from top */
+  left: 15px;  /* distance from left */
+  width: 30px;
+  cursor: pointer;
+}
+
+/* === Headings === */
+.form-panel h2 {
+  color: #4B6FB3;
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.subheading {
+  color: #4B6FB3;
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* === Input Row for First/Last Name === */
+.input-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.input-group.half {
+  flex: 1;
+}
+
+/* === Input Groups === */
+.input-group {
+  position: relative;
+  margin-bottom: 18px;
+  width: 100%;          /* make the group fill the form-panel */
+  max-width: 400px;     /* optional: max width for the input */
+  margin-left: auto;    /* center the group */
+  margin-right: auto;   /* center the group */
+}
+
+.input-group img {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  opacity: 0.6;
+}
+
+.input-group input {
+  width: 100%;          /* fill the input-group */
+  padding: 12px 12px 12px 40px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background: #fafafa;
+  outline: none;
+  transition: 0.3s;
+}
+
+
+
+.input-group input:hover,
+.input-group input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 6px rgba(52, 152, 219, 0.4);
+}
+
+/* === Button === */
+.button {
+  padding: 12px 0;
+  width: 50%;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  background: #3498db;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+  margin: 15px auto 0 auto;
+  display: block;
+}
+
+.button:hover {
+  background: #2980b9;
+  box-shadow: 0 5px 15px rgba(41, 128, 185, 0.35);
+}
+
+/* === Links === */
+.small-text {
+  margin-top: 15px;
+  font-size: 13px;
+  color: #555;
+  text-align: center;
+}
+
+.blue-link {
+  color: #3498db;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.blue-link:hover {
+  text-decoration: underline;
+}
+
+/* === Errors === */
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: -6px;
+  margin-bottom: 8px;
+}
+
+/* === Password Rules === */
+.password-rules {
+  text-align: left;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.password-rules p {
+  margin: 2px 0;
+}
+
+.password-rules .ok { color: green; }
+.password-rules .bad { color: red; }
+
+.strength {
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+.strength.weak { color: red; }
+.strength.medium { color: orange; }
+.strength.strong { color: green; }
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .split-container {
+    flex-direction: column; /* stacked on mobile */
+    height: auto;
+    width: 90%;
+  }
+
+  .image-panel {
+    width: 100%;
+    height: 200px;
+  }
+
+  .form-panel {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .button {
+    width: 70%;
+  }
+}

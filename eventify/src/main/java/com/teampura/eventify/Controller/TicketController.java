@@ -1,6 +1,7 @@
 package com.teampura.eventify.Controller;
-import com.teampura.eventify.Entity.TicketEntity.Ticket;
-import com.teampura.eventify.Service.TicketService;
+import com.teampura.eventify.entity.TicketEntity.Ticket;
+import com.teampura.eventify.service.TicketService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

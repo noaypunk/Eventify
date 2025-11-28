@@ -1,4 +1,4 @@
-package com.teampura.eventify.Entity.PaymentEntity;
+package com.teampura.eventify.entity.PaymentEntity;
 
 import jakarta.persistence.*;
 

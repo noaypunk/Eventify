@@ -1,12 +1,12 @@
 package com.teampura.eventify.Repository;
 
-import com.teampura.eventify.Entity.UserEntity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.teampura.eventify.entity.UserEntity.User;
+
 import java.util.List;
 import java.util.Optional;
-
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -19,5 +19,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByMobileNum(Long mobileNum);
 
-    List<User> findByContainingIgnoreCase(String fname);
+    // Corrected search method
+    List<User> findByFnameContainingIgnoreCase(String fname);
 }

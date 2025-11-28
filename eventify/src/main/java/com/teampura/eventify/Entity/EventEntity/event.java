@@ -1,4 +1,4 @@
-package com.teampura.eventify.Entity.EventEntity;
+package com.teampura.eventify.entity.EventEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

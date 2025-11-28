@@ -1,0 +1,15 @@
+com\teampura\eventify\Controller\EventController.class
+com\teampura\eventify\entity\UserEntity\User.class
+com\teampura\eventify\service\TicketService.class
+com\teampura\eventify\entity\TicketEntity\Ticket.class
+com\teampura\eventify\Repository\UserRepository.class
+com\teampura\eventify\service\UserService.class
+com\teampura\eventify\entity\PaymentEntity\payment.class
+com\teampura\eventify\entity\EventEntity\event.class
+com\teampura\eventify\service\EventService.class
+com\teampura\eventify\Repository\EventRepository.class
+com\teampura\eventify\Controller\UserController.class
+com\teampura\eventify\Controller\TicketController.class
+com\teampura\eventify\Repository\TicketRepository.class
+com\teampura\eventify\EventifyApplication.class
+com\teampura\eventify\entity\FeedbackEntity\feedback.class

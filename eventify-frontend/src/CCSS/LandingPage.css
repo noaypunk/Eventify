@@ -1,0 +1,164 @@
+/* === Landing Page Styles === */
+
+/* Header */
+.landing-header {
+  position: fixed; /* stick at top */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 70px; /* adjust header height */
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.left-header {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  height: 50px;
+  width: 50px;
+  margin-right: 15px;
+}
+
+.site-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4B6FB3;
+}
+
+/* Right Header (User + Logout) */
+.right-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Logout Button */
+.logout-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  background-color: #e74c3c;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #c0392b;
+}
+
+/* Login Button (if user not logged in) */
+.login-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  background-color: #5dade2;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-button:hover {
+  background-color: #3498db;
+}
+
+/* Main Hero Container */
+.landing-main {
+  width: 100vw;           /* full width */
+  background-color: #1f3c7e;
+  color: #a3c4f0;
+  text-align: center;
+  padding: 150px 100px; /* top padding = header height + spacing */
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.landing-title {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.landing-subtitle {
+  font-size: 24px;
+  margin-bottom: 40px;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.search-bar input {
+  padding: 12px 15px;
+  width: 300px;
+  max-width: 90%;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
+
+.search-bar button {
+  padding: 12px 25px;
+  border-radius: 8px;
+  border: none;
+  background-color: #5dade2;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.search-bar button:hover {
+  background-color: #3498db;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .landing-header {
+    padding: 0 20px;
+  }
+
+  .landing-title {
+    font-size: 32px;
+  }
+
+  .landing-subtitle {
+    font-size: 18px;
+  }
+
+  .search-bar input {
+    width: 200px;
+  }
+
+  .login-button, .logout-button {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .user-name {
+    font-size: 14px;
+  }
+}

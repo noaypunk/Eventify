@@ -1,8 +1,10 @@
 package com.teampura.eventify.Repository;
 
-import com.teampura.eventify.Entity.TicketEntity.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.teampura.eventify.entity.TicketEntity.Ticket;
+
 import java.util.List;
 
 
