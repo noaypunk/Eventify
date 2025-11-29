@@ -13,24 +13,24 @@ const Login = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
-  const [msgType, setMsgType] = useState("");
+  const [msgType, setMsgType] = useState(""); // "success" or "error"
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Call backend login endpoint
       const response = await axios.post("http://localhost:8080/api/auth/login", form);
-      
-      // Store user info in localStorage
+
+      // Store user info
       localStorage.setItem("user", JSON.stringify(response.data));
-      
+      localStorage.setItem("userId", response.data.userID);
+
+      // Show success message
       setMsgType("success");
       setMessage("Login successful!");
-      
-      // Redirect to landing page
+
+      // Redirect after a short delay
       setTimeout(() => navigate("/"), 1000);
     } catch (error) {
       console.error(error);
@@ -54,7 +54,12 @@ const Login = () => {
         <h2>WELCOME</h2>
         <p className="subheading">Login with email</p>
 
-        {message && <div className={`message ${msgType}`}>{message}</div>}
+        {/* Notification */}
+        {message && (
+          <div className={`login-message ${msgType}`}>
+            {message}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="input-group">
