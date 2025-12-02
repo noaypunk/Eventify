@@ -15,23 +15,28 @@ const Login = () => {
   const [message, setMessage] = useState("");
   const [msgType, setMsgType] = useState(""); // "success" or "error"
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/api/auth/login", form);
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/login",
+        form
+      );
+      const user = response.data;
 
-      // Store user info
-      localStorage.setItem("user", JSON.stringify(response.data));
-      localStorage.setItem("userId", response.data.userID);
+      // Store user info in localStorage
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("userId", user.userID);
 
-      // Show success message
       setMsgType("success");
       setMessage("Login successful!");
 
-      // Redirect after a short delay
-      setTimeout(() => navigate("/"), 1000);
+      setTimeout(() => {
+        navigate("/", { replace: true }); // everyone goes to LandingPage
+      }, 1000);
     } catch (error) {
       console.error(error);
       setMsgType("error");
@@ -41,7 +46,10 @@ const Login = () => {
 
   return (
     <div className="split-container">
-      <div className="image-panel" style={{ backgroundImage: `url(${loginBG})` }}></div>
+      <div
+        className="image-panel"
+        style={{ backgroundImage: `url(${loginBG})` }}
+      ></div>
 
       <div className="form-panel">
         <img
@@ -54,12 +62,7 @@ const Login = () => {
         <h2>WELCOME</h2>
         <p className="subheading">Login with email</p>
 
-        {/* Notification */}
-        {message && (
-          <div className={`login-message ${msgType}`}>
-            {message}
-          </div>
-        )}
+        {message && <div className={`login-message ${msgType}`}>{message}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="input-group">
@@ -84,11 +87,16 @@ const Login = () => {
               required
             />
           </div>
-          <button type="submit" className="button">Login</button>
+          <button type="submit" className="button">
+            Login
+          </button>
         </form>
 
         <p className="small-text">
-          Don’t have an account? <Link to="/register" className="blue-link">Register</Link>
+          Don’t have an account?{" "}
+          <Link to="/register" className="blue-link">
+            Register
+          </Link>
         </p>
       </div>
     </div>

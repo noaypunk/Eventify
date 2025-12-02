@@ -1,9 +1,6 @@
 package com.teampura.eventify.entity.UserEntity;
 
 import jakarta.persistence.*;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 
 @Entity
@@ -14,6 +11,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userID")
     private Long userID;
+
+    @Column(name = "is_Staff", nullable = false)
+    private Boolean isStaff = false;
 
     @Column(name = "fname", nullable = false, length = 50)
     private String fname;
@@ -32,6 +32,9 @@ public class User {
 
     public Long getUserID() { return userID; }
     public void setUserID(Long userID) { this.userID = userID; }
+
+    public Boolean getIsStaff() { return isStaff; }
+    public void setIsStaff(Boolean isStaff) { this.isStaff = isStaff; }
 
     public String getFname() { return fname; }
     public void setFname(String fname) { this.fname = fname; }

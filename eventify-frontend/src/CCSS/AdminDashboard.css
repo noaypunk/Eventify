@@ -1,0 +1,501 @@
+/* --- Global Reset & Variables --- */
+:root {
+  --primary-color: #4a90e2; /* Blue for primary actions/accents */
+  --secondary-color: #f7a738; /* Orange/Yellow for secondary actions */
+  --background-color: #f4f7f6; /* Light grey background */
+  --card-background: #ffffff; /* White card background */
+  --text-color-dark: #333333;
+  --text-color-light: #555555;
+  --sidebar-width: 250px;
+  --topbar-height: 60px;
+  --box-shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --box-shadow-hover: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color-dark);
+}
+
+/* --- 1. Main Layout Container --- */
+.admin-container {
+  display: flex;
+  min-height: 100vh; /* Full height of the viewport */
+}
+
+/* --- 2. Admin Content Area (Excludes Sidebar) --- */
+.admin-content {
+  flex-grow: 1; /* Takes up all remaining space */
+  padding-left: var(--sidebar-width); /* Space for the fixed sidebar */
+  transition: padding-left 0.3s ease; /* For future sidebar collapse feature */
+}
+
+/* --- 3. Topbar Styles (Assuming Topbar is inside admin-content) --- */
+/* You'll define the content of Topbar in its own CSS, but here's the container style */
+.topbar-container {
+  height: var(--topbar-height);
+  background-color: var(--card-background);
+  box-shadow: var(--box-shadow-light);
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky; /* Keeps topbar visible when scrolling dashboard */
+  top: 0;
+  z-index: 10;
+}
+
+/* --- 4. Dashboard Cards Section --- */
+.dashboard-cards {
+  display: grid;
+  /* 4 columns for large screens, adjust as needed */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px; /* Space between the cards */
+  padding: 30px; /* Padding around the dashboard content */
+}
+
+/* --- 5. Individual Dashboard Card Styles (Assuming DashboardCard has a class like 'dashboard-card') --- */
+.dashboard-card {
+  background-color: var(--card-background);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: var(--box-shadow-light);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border-left: 5px solid var(--primary-color); /* Highlight strip */
+}
+
+.dashboard-card:hover {
+  transform: translateY(-3px); /* Subtle lift on hover */
+  box-shadow: var(--box-shadow-hover);
+}
+
+/* Color variations for specific cards (Optional: based on title/prop) */
+.dashboard-card:nth-child(1) { border-color: var(--primary-color); }
+.dashboard-card:nth-child(2) { border-color: #28a745; } /* Green for users */
+.dashboard-card:nth-child(3) { border-color: var(--secondary-color); } /* Orange for upcoming */
+.dashboard-card:nth-child(4) { border-color: #dc3545; } /* Red for revenue/money (can be primary or secondary) */
+
+
+.card-title {
+  font-size: 1.1em;
+  color: var(--text-color-light);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.card-value {
+  font-size: 2.2em;
+  font-weight: 700;
+  color: var(--text-color-dark);
+}
+
+/* --- 6. Responsive Adjustments --- */
+@media (max-width: 1200px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-container {
+    flex-direction: column; /* Stacks sidebar and content */
+  }
+
+  .admin-content {
+    padding-left: 0; /* Remove padding */
+  }
+
+  /* Adjust sidebar to be at the top or hidden by default on mobile */
+  /* (You'll need to update your Sidebar component's CSS to handle this) */
+  .dashboard-cards {
+    grid-template-columns: 1fr; /* 1 column on small screens */
+    padding: 15px;
+    gap: 15px;
+  }
+}
+
+
+/* 2. Admin Users Page Content Wrapper */
+.admin-users-content {
+    /* Apply consistent padding to the main content area */
+    padding: 30px; 
+}
+
+/* 3. Page Heading Style */
+.admin-users-content h2 {
+    font-size: 1.8em;
+    color: var(--text-color-dark, #333333); /* Use fallback if variable is not defined */
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* 4. DataTable Container Re-use (Replicated from AdminDashboard/AdminEvents CSS) */
+.data-table-container {
+    background-color: var(--card-background, #ffffff);
+    border-radius: 12px;
+    /* Use fallback for box shadow */
+    box-shadow: var(--box-shadow-light, 0 4px 6px rgba(0, 0, 0, 0.1)); 
+    padding: 20px;
+    overflow-x: auto;
+}
+/* -------------------------------------- */
+/* --- 5. Sidebar Component Styles (Sidebar.jsx) --- */
+/* -------------------------------------- */
+
+.sidebar {
+    width: var(--sidebar-width); /* Defined as 250px in root */
+    background-color: var(--text-color-dark); /* Dark background for high contrast */
+    color: white;
+    padding: 20px 0;
+    position: fixed; /* Fixed position so it doesn't scroll with content */
+    top: 0;
+    left: 0;
+    height: 100vh; /* Full viewport height */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 20; /* Ensures it sits above other content */
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Panel Title/Branding --- */
+.sidebar h2 {
+    font-size: 1.5em;
+    font-weight: 700;
+    text-align: center;
+    padding: 10px 20px 30px 20px;
+    color: var(--primary-color); /* Highlight brand name with primary color */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 15px;
+}
+
+/* --- Navigation List --- */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    flex-grow: 1; /* Allows the list to take up available space */
+}
+
+/* --- List Items (Navigation Links) --- */
+.sidebar li {
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border-left: 5px solid transparent; /* Prepare for active state indicator */
+}
+
+/* Hover State */
+.sidebar li:hover {
+    background-color: #3b3e41; /* Slightly lighter dark shade on hover */
+    border-left-color: var(--primary-color);
+}
+
+/* Active/Current Link State (You'll need logic to apply this class dynamically in React) */
+.sidebar li.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-left-color: var(--secondary-color);
+    font-weight: 600;
+}
+
+/* --- Logout/Footer Link (Optional styling for last item) --- */
+.sidebar ul li:last-child {
+    margin-top: auto; /* Pushes the last item (e.g., Logout) to the bottom */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ff6b6b; /* Soft red for logout */
+}
+
+.sidebar ul li:last-child:hover {
+    background-color: #3b3e41;
+    border-left-color: #ff6b6b;
+}
+
+/* -------------------------------------- */
+/* --- DataTable Specific Styles (.admin-table) --- */
+/* -------------------------------------- */
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse; /* Removes spacing between borders */
+    font-size: 1em;
+    min-width: 650px; /* Ensures table doesn't look squished on wide screens */
+}
+
+/* --- Table Header Styles (thead) --- */
+.admin-table thead {
+    background-color: #f8f9fa; /* Very light grey header background */
+    border-bottom: 2px solid var(--border-color, #e0e0e0);
+}
+
+.admin-table th {
+    text-align: left;
+    padding: 15px 20px;
+    font-weight: 600;
+    color: var(--text-color-light, #555555);
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+}
+
+/* --- Table Row and Data Cell Styles (tbody) --- */
+.admin-table tbody tr {
+    border-bottom: 1px solid var(--border-color, #e0e0e0);
+    transition: background-color 0.3s ease;
+}
+
+/* Highlight row on hover */
+.admin-table tbody tr:hover {
+    background-color: #fafafa; 
+}
+
+.admin-table td {
+    padding: 15px 20px;
+    color: var(--text-color-dark, #333333);
+    /* For consistency, make sure text isn't overflowing columns too much */
+    max-width: 250px; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- Action Column Buttons --- */
+.admin-table td:last-child {
+    /* Ensure action column doesn't wrap */
+    white-space: nowrap; 
+}
+
+.admin-table button {
+    /* Base button reset */
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 15px; /* Spacing between buttons */
+    padding: 8px 12px;
+    font-size: 0.9em;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+/* Edit Button Style */
+.admin-table .edit-btn {
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+
+}
+.admin-table .delete-btn {
+    color: #dc3545; 
+    border: 1px solid #dc3545;
+    cursor: pointer;
+
+}
+
+/* -------------------------------------- */
+/* --- 6. ModalForm Component Styles --- */
+/* -------------------------------------- */
+
+/* --- Modal Background Overlay (.modal-bg) --- */
+.modal-bg {
+    /* Covers the entire viewport */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* Dark, transparent overlay to blur the background */
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: 1000; /* Ensure it's above everything else */
+}
+
+/* --- Modal Container (.modal) --- */
+.modal {
+    background-color: var(--card-background, #ffffff);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    width: 90%;
+    max-width: 450px; /* Maximum width for the form */
+    display: flex;
+    flex-direction: column;
+    /* Animation for a subtle entrance */
+    transform: scale(0.95);
+    opacity: 0;
+    animation: modal-in 0.3s forwards cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Modal Entry Animation */
+@keyframes modal-in {
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* --- Modal Heading --- */
+.modal h2 {
+    font-size: 1.5em;
+    color: var(--text-color-dark);
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--border-color, #e0e0e0);
+    padding-bottom: 10px;
+    font-weight: 600;
+}
+
+/* --- Form Input Fields --- */
+.modal input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: 6px;
+    font-size: 1em;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2); /* Light blue shadow */
+}
+
+/* --- Action Buttons --- */
+/* Target the Save button (which is the first button) */
+.modal button:not(.cancel) {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 10px;
+}
+
+.modal button:not(.cancel):hover {
+    background-color: #3b73c2; 
+}
+
+/* Target the Cancel button */
+.modal .cancel {
+    background: none;
+    color: var(--text-color-light);
+    border: 1px solid var(--border-color);
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+}
+
+.modal .cancel:hover {
+    background-color: #f0f0f0;
+}
+
+/* -------------------------------------- */
+/* --- 7. Topbar Component Styles (Topbar.jsx) --- */
+/* -------------------------------------- */
+
+.topbar {
+    /* Base structure setup (revisiting the properties defined earlier) */
+    height: var(--topbar-height, 40px);
+    background-color: var(--card-background, #ffffff);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Lighter shadow than the sidebar/cards */
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Push content to the right (assuming nav/user info might go here) */
+    position: sticky; 
+    top: 0;
+    z-index: 10;
+}
+
+/* --- Welcome Text/Heading --- */
+.topbar h3 {
+    font-size: 1.1em;
+    font-weight: 500;
+    color: var(--text-color-light, #555555);
+    margin: 0;
+}
+
+/* --- Advanced Styling (e.g., for User Profile/Notifications) --- */
+/* If you add more elements (like a user icon, notification bell), 
+   you can use a container like this to manage alignment: 
+*/
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.topbar-right .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    border: 2px solid var(--secondary-color);
+    cursor: pointer;
+}
+
+/* Mobile Adjustments (optional, assuming sidebar collapses) */
+@media (max-width: 768px) {
+    .topbar {
+        padding: 0 15px;
+        justify-content: space-between; /* If you add a menu button */
+    }
+}
+
+/* -------------------------------------- */
+/* --- AdminReports Specific Layout --- */
+/* -------------------------------------- */
+
+/* --- New CSS for Filter Controls in AdminReports --- */
+
+.filter-controls {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color, #e0e0e0);
+}
+
+.filter-controls label {
+    font-weight: 600;
+    color: var(--text-color-dark);
+    margin-right: 15px;
+}
+
+.event-filter-select {
+    padding: 10px 15px;
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: 6px;
+    font-size: 1em;
+    background-color: var(--card-background, #ffffff);
+    cursor: pointer;
+    appearance: none; /* Removes default OS dropdown styling */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="292.4" height="292.4"><path fill="%234A90E2" d="M287 69.4a17.6 17.6 0 0 0-13.2-5.6H18.4c-5 0-9.3 2-13.2 5.6-3.9 3.6-5.9 8.3-5.9 13.9 0 5.6 2 10.3 5.9 13.9l120.4 120.4c3.9 3.6 8.3 5.6 13.2 5.6 5 0 9.3-2 13.2-5.6L287 97.2c3.9-3.6 5.9-8.3 5.9-13.9 0-5.6-2-10.3-5.9-13.9z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+}
+
+.event-filter-select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
