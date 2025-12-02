@@ -1,7 +1,6 @@
 // src/EventComponents/EventList.jsx
 import React, { useState, useEffect } from "react";
 import EventCard from "./EventCard";
-import "../EventCSS/EventCard.css"; // for grid styling
 
 export default function EventList() {
   const [events, setEvents] = useState([]);

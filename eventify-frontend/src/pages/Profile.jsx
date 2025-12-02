@@ -1,11 +1,12 @@
+// src/pages/Profile.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
 import "../CCSS/Profile.css";
 
 import emailIcon from "../assets/images/email.png";
 import lockIcon from "../assets/images/lock-icon.png";
 import telephoneIcon from "../assets/images/telephone.png";
+import logo from "../assets/images/red-carpet.png";
 import axios from "axios";
 
 const Profile = () => {
@@ -60,19 +61,15 @@ const Profile = () => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
 
-    // Validate current password
     if (name === "currentPassword" && user) {
       const isCurrentCorrect = value === user.password;
       setPasswordErrors(prev => ({ ...prev, current: isCurrentCorrect }));
-
-      // Reset new password if current password is wrong
       if (!isCurrentCorrect) {
         setFormData(prev => ({ ...prev, newPassword: "" }));
         setPasswordErrors(prev => ({ ...prev, upperLower: false, numberSpecial: false }));
       }
     }
 
-    // Validate new password only if current password correct
     if (name === "newPassword" && passwordErrors.current) {
       setPasswordErrors(prev => ({
         ...prev,
@@ -95,7 +92,6 @@ const Profile = () => {
       const res = await axios.put(`http://localhost:8080/api/users/${user.userID}`, updatedUser);
       setUser(res.data);
 
-      // Reset password fields & validation after save
       setFormData(prev => ({ ...prev, currentPassword: "", newPassword: "" }));
       setPasswordErrors({ current: false, upperLower: false, numberSpecial: false });
 
@@ -106,12 +102,65 @@ const Profile = () => {
     }
   };
 
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      localStorage.removeItem("user");
+      localStorage.removeItem("userId");
+      navigate("/login");
+    }
+  };
+
   if (loading) return <p>Loading user data...</p>;
   if (!user) return <p>User data not available.</p>;
 
   return (
     <div className="profile-container">
-      <Navbar />
+      {/* === Navbar === */}
+      <header className="navbar">
+        <div className="navbar-left">
+          <img
+            src={logo}
+            alt="logo"
+            className="navbar-logo"
+            onClick={() => navigate("/")}
+          />
+          <span className="navbar-site-name" onClick={() => navigate("/")}>
+            Eventify
+          </span>
+
+          {user?.isStaff && (
+            <button
+              className="navbar-admin-button-left"
+              onClick={() => navigate("/AdminDashboard")}
+            >
+              Admin Dashboard
+            </button>
+          )}
+        </div>
+
+        <div className="navbar-right">
+          {user ? (
+            <>
+              <span
+                className={`navbar-user-name ${user.isStaff ? "staff" : "regular"}`}
+                onClick={() => navigate("/profile")}
+              >
+                {user.fname}
+              </span>
+
+              <button className="navbar-logout-button" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <button className="navbar-login-button" onClick={() => navigate("/login")}>
+              Login
+            </button>
+          )}
+        </div>
+      </header>
+
       <div className="profile-content">
         {/* Profile Card */}
         <div className="profile-card">
@@ -133,64 +182,63 @@ const Profile = () => {
             <button className={`tab ${activeTab === "security" ? "active" : ""}`} onClick={() => setActiveTab("security")}>Security & Account Details</button>
           </div>
 
-            {activeTab === "events" && (
-  <div className="events-container">
-    {/* Events Summary Cards */}
-    <div className="events-summary">
-      <h3 className="section-title">Events History</h3>
+          {activeTab === "events" && (
+            <div className="events-container">
+              {/* Events Summary Cards */}
+              <div className="events-summary">
+                <h3 className="section-title">Events History</h3>
+                <div className="events-cards">
+                  <div className="event-card">
+                    <p className="event-label">Free Events Attended</p>
+                    <p className="event-count">{user.freeEvents || 0}</p>
+                  </div>
+                  <div className="event-card">
+                    <p className="event-label">Total Events Attended</p>
+                    <p className="event-count">{user.totalEvents || 0}</p>
+                  </div>
+                  <div className="event-card">
+                    <p className="event-label">Paid Events Attended</p>
+                    <p className="event-count">{user.paidEvents || 0}</p>
+                  </div>
+                </div>
+              </div>
 
-      <div className="events-cards">
-        <div className="event-card">
-          <p className="event-label">Free Events Attended</p>
-          <p className="event-count">{user.freeEvents || 0}</p>
-        </div>
-        <div className="event-card">
-          <p className="event-label">Total Events Attended</p>
-          <p className="event-count">{user.totalEvents || 0}</p>
-        </div>
-        <div className="event-card">
-          <p className="event-label">Paid Events Attended</p>
-          <p className="event-count">{user.paidEvents || 0}</p>
-        </div>
-      </div>
-    </div>
-
-    {/* Event History Table */}
-    <div className="events-history-table">
-      <table>
-        <thead>
-          <tr>
-            <th>Event Name</th>
-            <th>Date & Time</th>
-            <th>Venue</th>
-            <th>Attendees</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {user.events && user.events.length > 0 ? (
-            user.events.map((event, index) => (
-              <tr key={index}>
-                <td>{event.name}</td>
-                <td>{event.dateTime}</td>
-                <td>{event.venue}</td>
-                <td>{event.attendees}</td>
-                <td>{event.price}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="5" style={{ textAlign: "center" }}>No events attended yet.</td>
-            </tr>
+              {/* Event History Table */}
+              <div className="events-history-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Event Name</th>
+                      <th>Date & Time</th>
+                      <th>Venue</th>
+                      <th>Attendees</th>
+                      <th>Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {user.events && user.events.length > 0 ? (
+                      user.events.map((event, index) => (
+                        <tr key={index}>
+                          <td>{event.name}</td>
+                          <td>{event.dateTime}</td>
+                          <td>{event.venue}</td>
+                          <td>{event.attendees}</td>
+                          <td>{event.price}</td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5" style={{ textAlign: "center" }}>No events attended yet.</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           )}
-        </tbody>
-      </table>
-    </div>
-  </div>
-)}
-
 
           {activeTab === "transactions" && <p>Transactions content here...</p>}
+
           {activeTab === "security" && (
             <div className="security-form">
               <div className="form-row">
@@ -242,7 +290,7 @@ const Profile = () => {
                       name="newPassword"
                       value={formData.newPassword}
                       onChange={handleChange}
-                      disabled={!passwordErrors.current} // disabled until current password is correct
+                      disabled={!passwordErrors.current}
                     />
                     <img src={lockIcon} className="icon-img" alt="lock"/>
                   </div>

@@ -4,13 +4,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../EventCSS/EventDetails.css";
 import arrowIcon from "../assets/images/arrow.png";
-import Navbar from "./Navbar";
+import logo from "../assets/images/red-carpet.png";
 
 export default function EventDetails() {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user")); // get logged-in user
 
+  // Fetch event details
   useEffect(() => {
     axios
       .get(`http://localhost:8080/api/events/${id}`)
@@ -26,16 +28,69 @@ export default function EventDetails() {
     ? event.eventImage
     : `${baseURL}${event.eventImage}`;
 
+  // Navbar logout
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      localStorage.removeItem("user");
+      localStorage.removeItem("userId");
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="event-details">
-      <Navbar />
+      {/* === Navbar === */}
+      <header className="navbar">
+        <div className="navbar-left">
+          <img
+            src={logo}
+            alt="logo"
+            className="navbar-logo"
+            onClick={() => navigate("/")}
+          />
+          <span className="navbar-site-name" onClick={() => navigate("/")}>
+            Eventify
+          </span>
 
-      {/* Back Button */}
+          {user?.isStaff && (
+            <button
+              className="navbar-admin-button-left"
+              onClick={() => navigate("/AdminDashboard")}
+            >
+              Admin Dashboard
+            </button>
+          )}
+        </div>
+
+        <div className="navbar-right">
+          {user ? (
+            <>
+              <span
+                className={`navbar-user-name ${user.isStaff ? "staff" : "regular"}`}
+                onClick={() => navigate("/profile")}
+              >
+                {user.fname}
+              </span>
+
+              <button className="navbar-logout-button" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <button className="navbar-login-button" onClick={() => navigate("/login")}>
+              Login
+            </button>
+          )}
+        </div>
+      </header>
+
+      {/* === Back Button === */}
       <button className="back-button" onClick={() => navigate(-1)}>
         <img src={arrowIcon} alt="Back" className="back-icon" />
       </button>
 
-      {/* Event Banner Image */}
+      {/* === Event Details === */}
       <img
         src={eventImage}
         alt={event.eventName}
