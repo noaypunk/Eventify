@@ -2,7 +2,6 @@ package com.teampura.eventify.service;
 
 import com.teampura.eventify.Repository.EventRepository;
 import com.teampura.eventify.entity.EventEntity.event;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class EventService {
         return eventRepository.findById(eventID);
     }
 
-    // UPDATE
+    // UPDATE (includes eventImage)
     public event updateEvent(Long eventID, event updatedEvent) {
         return eventRepository.findById(eventID).map(existing -> {
             existing.setEventName(updatedEvent.getEventName());
@@ -41,6 +40,7 @@ public class EventService {
             existing.setEventDate(updatedEvent.getEventDate());
             existing.setEventTime(updatedEvent.getEventTime());
             existing.setEventOrganizer(updatedEvent.getEventOrganizer());
+            existing.setEventImage(updatedEvent.getEventImage()); // update image URL
             return eventRepository.save(existing);
         }).orElse(null);
     }

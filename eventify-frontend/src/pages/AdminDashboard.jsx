@@ -6,9 +6,10 @@ import "../CCSS/AdminDashboard.css";
 
 const AdminDashboard = () => {
   const [userCount, setUserCount] = useState(0);
+  const [eventCount, setEventCount] = useState(0); // new state for events
 
   useEffect(() => {
-    // Replace with your actual API endpoint that returns total users
+    // Fetch total users
     const fetchUserCount = async () => {
       try {
         const response = await axios.get("http://localhost:8080/api/users/count");
@@ -18,19 +19,28 @@ const AdminDashboard = () => {
       }
     };
 
+    // Fetch total events
+    const fetchEventCount = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/events"); // get all events
+        setEventCount(response.data.length); // count total events
+      } catch (error) {
+        console.error("Error fetching event count:", error);
+      }
+    };
+
     fetchUserCount();
+    fetchEventCount();
   }, []);
 
   return (
-    
     <div className="admin-container">
       <Sidebar />
       <div className="admin-content">
         <div className="dashboard-cards">
-          <DashboardCard title="Total Events" value="Dont touch this for now" />
+          <DashboardCard title="Total Events" value={eventCount} />
           <DashboardCard title="Registered Users" value={userCount} />
-          <DashboardCard title="Upcoming Events" value="Dont touch this for now" />
-          <DashboardCard title="Revenue" value="Dont touch this for now" />
+          <DashboardCard title="Upcoming Events" value={eventCount} />
         </div>
       </div>
     </div>

@@ -5,6 +5,8 @@ import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
+import EventDetails from "./pages/EventDetails";
+
 
 // ADMIN PAGES
 import AdminDashboard from "./pages/AdminDashboard"; // the actual page
@@ -54,6 +56,15 @@ function App() {
             </PrivateRoute>
           }
         />
+
+        <Route
+  path="/events/:id"
+  element={
+    <PrivateRoute>
+      <EventDetails />
+    </PrivateRoute>
+  }
+/>
 
         {/* --- ADMIN ROUTES --- */}
         <Route

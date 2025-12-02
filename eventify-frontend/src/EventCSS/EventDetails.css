@@ -1,0 +1,64 @@
+.event-details {
+  max-width: 800px;
+  margin: 90px auto 40px;
+  padding: 12px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  position: relative; /* needed for back button overlay */
+}
+
+.event-details h2 {
+  font-size: 40px;
+  margin-bottom: 10px;
+  color: #2c3e50;
+  text-align: center;
+}
+
+/* Only style the event banner image */
+.event-main-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0;
+}
+
+.event-details p {
+  font-size: 16px;
+  line-height: 1.6; 
+}
+
+.event-desc {
+  margin-bottom: 20px;   /* extra gap below description */
+  font-style: italic;    /* optional: make it stand out */
+  color: #555;           /* softer text color */
+}
+
+.event-details strong {
+  color: #4B6FB3;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10; /* ensures it sits above the image */
+}
+
+.back-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.back-button:hover .back-icon {
+  transform: scale(1.1);
+}

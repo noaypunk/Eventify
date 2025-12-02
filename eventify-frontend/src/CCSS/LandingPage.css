@@ -1,71 +1,150 @@
-/* === Landing Page Styles === */
-
-/* Main Hero Container */
-.landing-main {
-  width: 100vw;
-  background-color: #1f3c7e;
-  color: #a3c4f0;
-  text-align: center;
-  padding: 150px 100px;
+/* ===========================
+   GLOBAL RESET
+=========================== */
+*, *::before, *::after {
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-.landing-title {
-  font-size: 48px;
-  font-weight: bold;
-  margin-bottom: 20px;
+body {
+  font-family: Arial, sans-serif;
+  background: #f8f9fa;
+  overflow-x: hidden;
 }
 
-.landing-subtitle {
-  font-size: 24px;
-  margin-bottom: 40px;
+/* ===========================
+   SAFE PAGE CONTAINER
+=========================== */
+.page-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-/* Search Bar */
-.search-bar {
+/* ===========================
+   SEARCH SECTION BELOW NAVBAR
+=========================== */
+.search-section {
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  padding: 90px 0 20px; /* Push below 70px navbar + spacing */
+  background: transparent;
+  overflow: hidden;
 }
 
-.search-bar input {
-  padding: 12px 15px;
-  width: 300px;
-  max-width: 90%;
+.search-container {
+  width: 100%;
+  max-width: 700px;
+  background: #2d73e3;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.search-container input {
+  flex: 1;
+  padding: 12px;
   border-radius: 8px;
   border: none;
   font-size: 16px;
 }
 
-.search-bar button {
-  padding: 12px 25px;
+.search-container button {
+  padding: 12px 20px;
   border-radius: 8px;
   border: none;
-  background-color: #5dade2;
-  color: #fff;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
+  background: #ffffff;
+  color: #2d73e3;
 }
 
-.search-bar button:hover {
-  background-color: #3498db;
+/* ===========================
+   HERO SECTION
+=========================== */
+.landing-main {
+  width: 100%;
+  padding: 20px 0;
+  text-align: center;
+}
+.landing-title {
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.landing-subtitle {
+  font-size: 1.2rem;
+  color: #4a4a4a;
+  margin-bottom: 25px;
 }
 
-/* Responsive */
+/* ===========================
+   EVENT COUNTER
+=========================== */
+.event-counter-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* ===========================
+   FEATURE CARDS / EVENTS
+=========================== */
+.feature-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin-bottom: 50px;
+}
+.feature-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  flex: 1 1 280px;
+  max-width: 330px;
+  overflow: hidden;
+}
+
+/* ===========================
+   RESPONSIVE QUERIES
+=========================== */
+@media (max-width: 1366px) {
+  .landing-title {
+    font-size: 2rem;
+  }
+  .landing-subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .search-container {
+    max-width: 90%;
+  }
+}
+
 @media (max-width: 768px) {
   .landing-title {
-    font-size: 32px;
+    font-size: 1.7rem;
   }
-
   .landing-subtitle {
-    font-size: 18px;
+    font-size: 1rem;
   }
-
-  .search-bar input {
-    width: 200px;
+  .search-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .search-container button {
+    width: 100%;
+  }
+  .feature-container {
+    flex-direction: column;
+    align-items: center;
   }
 }
