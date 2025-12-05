@@ -217,7 +217,7 @@ html, body {
   text-align: center;
   flex-shrink: 0;
   align-self: flex-start;
-  margin-top: 90px;
+  margin-top: 3px;
 }
 
 /* Avatar & Info */
@@ -258,7 +258,7 @@ html, body {
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
   overflow-x: auto;
   align-self: flex-start;
-  margin-top: 90px;
+  margin-top: 3px;
 }
 
 /* === Tabs === */

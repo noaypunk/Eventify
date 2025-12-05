@@ -1,0 +1,405 @@
+/* ================== RESET ================== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #fafbfc;
+  color: #1a202c;
+  overflow: hidden;
+}
+
+/* ================== EVENT DETAILS CONTAINER ================== */
+.event-details {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #eeeeee;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 60px;
+}
+
+/* ================== NAVBAR ================== */
+.navbar {
+  width: 100%;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  flex-shrink: 0;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: transform 0.2s;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.1);
+}
+
+.navbar-site-name {
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
+  letter-spacing: -0.5px;
+  transition: transform 0.2s;
+}
+
+.navbar-site-name:hover {
+  transform: scale(1.02);
+}
+
+.navbar-admin-button-left {
+  margin-left: 25px;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.navbar-admin-button-left:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.navbar-user-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2d3748;
+  cursor: pointer;
+  padding: 10px 18px;
+  border-radius: 10px;
+  transition: all 0.2s;
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.navbar-user-name:hover {
+  background: rgba(102, 126, 234, 0.15);
+  transform: translateY(-1px);
+}
+
+.navbar-user-name.staff {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.navbar-logout-button {
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
+}
+
+.navbar-logout-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
+}
+
+.navbar-login-button {
+  padding: 10px 28px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.navbar-login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* ================== BACK BUTTON ================== */
+.back-button {
+  position: fixed;
+  top: 100px;
+  left: 40px;
+  width: 50px;
+  height: 50px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  z-index: 100;
+}
+
+.back-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.back-icon {
+  width: 20px;
+  height: 20px;
+  transform: rotate(0deg);
+}
+
+/* ================== EVENT CONTENT WRAPPER ================== */
+.event-content-wrapper {
+  max-width: 1000px;
+  width: 100%;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 30px 40px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ================== EVENT IMAGE ================== */
+.event-main-image {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0px 9px 12px -2px rgba(0, 0, 0, 0.25);
+}
+
+/* ================== EVENT INFO ================== */
+.event-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Event Title */
+.event-details h2 {
+  font-size: 48px;
+  font-weight: 800;
+  color: #1a202c;
+  line-height: 1.2;
+  letter-spacing: -1px;
+  text-align: center;
+}
+
+.event-details .event-desc {
+  font-size: 18px;
+  color: #4a5568;
+  line-height: 1.8;
+  padding: 24px 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  /* Wrapping & vertical resize */
+  white-space: normal;        /* allow text to wrap */
+  word-wrap: break-word;      /* break long words if needed */
+  overflow: visible;          /* show all text */
+  text-overflow: clip;        /* prevent ellipsis */
+  height: auto;               /* grow vertically */
+  display: block;
+  text-align: left;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Event Details (Date, Time, Location, Organizer) */
+.event-details > p {
+  font-size: 16px;
+  color: #2d3748;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
+}
+
+.event-details > p strong {
+  font-weight: 700;
+  color: #667eea;
+  min-width: 120px;
+}
+
+/* Loading State */
+.event-details > p:only-child {
+  text-align: center;
+  font-size: 18px;
+  color: #718096;
+  margin-top: 100px;
+}
+
+/* ================== RESPONSIVE ================== */
+@media (max-width: 992px) {
+  .event-content-wrapper {
+    padding: 0 30px;
+  }
+  .event-main-image {
+    max-height: 400px;
+  }
+  .event-details h2 {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 30px;
+    height: 75px;
+  }
+  .back-button {
+    top: 85px;
+    left: 20px;
+    width: 45px;
+    height: 45px;
+  }
+  .event-content-wrapper {
+    padding: 0 20px;
+  }
+  .event-main-image {
+    max-height: 300px;
+  }
+  .event-details h2 {
+    font-size: 32px;
+  }
+  .event-details .event-desc {
+    font-size: 16px;
+    max-inline-size: 50ch;
+    padding: 20px;
+  }
+  .event-details > p {
+    font-size: 15px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .event-details > p strong {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    height: 70px;
+    padding: 0 20px;
+  }
+  .navbar-logo {
+    width: 35px;
+    height: 35px;
+  }
+  .navbar-site-name {
+    font-size: 20px;
+  }
+  .back-button {
+    top: 80px;
+    left: 15px;
+    width: 40px;
+    height: 40px;
+  }
+  .back-icon {
+    width: 16px;
+    height: 16px;
+  }
+  .event-main-image {
+    max-height: 250px;
+    border-radius: 15px;
+  }
+  .event-details h2 {
+    font-size: 28px;
+  }
+  .event-details .event-desc {
+    font-size: 15px;
+    max-inline-size: 45ch;
+    padding: 16px;
+  }
+  .event-details > p {
+    font-size: 14px;
+  }
+}
+
+/* Register Button Wrapper - centers button */
+.event-register-button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+/* Register Button Style */
+.register-button {
+  padding: 14px 36px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+}
+
+.register-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(102, 126, 234, 0.4);
+}

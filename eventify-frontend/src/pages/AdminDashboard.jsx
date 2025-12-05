@@ -1,29 +1,60 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../AdminComponents/Sidebar";
+import { useNavigate, useLocation } from "react-router-dom";
 import DashboardCard from "../AdminComponents/DashboardCard";
-import axios from "axios"; // for API calls
+import axios from "axios";
 import "../CCSS/AdminDashboard.css";
 
 const AdminDashboard = () => {
-  const [userCount, setUserCount] = useState(0);
-  const [eventCount, setEventCount] = useState(0); // new state for events
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // ===== Sidebar State =====
+  const [adminName, setAdminName] = useState("Admin");
 
   useEffect(() => {
-    // Fetch total users
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.fname) {
+      setAdminName(user.fname);
+    }
+  }, []);
+
+  const isActive = (path) => location.pathname === path;
+
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      localStorage.removeItem("user");
+      localStorage.removeItem("userId");
+      navigate("/login", { replace: true });
+    }
+  };
+
+  const menuItems = [
+    { name: "Home", path: "/LandingPage" },
+    { name: "Dashboard", path: "/AdminDashboard" },
+    { name: "Events", path: "/AdminEvents" },
+    { name: "Users", path: "/AdminUsers" },
+    { name: "Reports", path: "/AdminReports" },
+  ];
+
+  // ===== Dashboard State =====
+  const [userCount, setUserCount] = useState(0);
+  const [eventCount, setEventCount] = useState(0);
+
+  useEffect(() => {
     const fetchUserCount = async () => {
       try {
         const response = await axios.get("http://localhost:8080/api/users/count");
-        setUserCount(response.data.count); // assuming API returns { count: number }
+        setUserCount(response.data.count);
       } catch (error) {
         console.error("Error fetching user count:", error);
       }
     };
 
-    // Fetch total events
     const fetchEventCount = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/events"); // get all events
-        setEventCount(response.data.length); // count total events
+        const response = await axios.get("http://localhost:8080/api/events");
+        setEventCount(response.data.length);
       } catch (error) {
         console.error("Error fetching event count:", error);
       }
@@ -33,9 +64,29 @@ const AdminDashboard = () => {
     fetchEventCount();
   }, []);
 
+  // ===== Combined JSX =====
   return (
     <div className="admin-container">
-      <Sidebar />
+      {/* Sidebar */}
+      <div className="sidebar">
+        <h2>Welcome, {adminName}</h2>
+        <ul>
+          {menuItems.map((item) => (
+            <li
+              key={item.path}
+              className={isActive(item.path) ? "active" : ""}
+              onClick={() => navigate(item.path)}
+            >
+              {item.name}
+            </li>
+          ))}
+          <li onClick={handleLogout} style={{ cursor: "pointer", color: "red" }}>
+            Logout
+          </li>
+        </ul>
+      </div>
+
+      {/* Dashboard Content */}
       <div className="admin-content">
         <div className="dashboard-cards">
           <DashboardCard title="Total Events" value={eventCount} />

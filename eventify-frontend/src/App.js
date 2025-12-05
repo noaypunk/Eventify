@@ -1,15 +1,14 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
-// PUBLIC PAGES
+// PAGES
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import EventDetails from "./pages/EventDetails";
 
-
 // ADMIN PAGES
-import AdminDashboard from "./pages/AdminDashboard"; // the actual page
+import AdminDashboard from "./pages/AdminDashboard";
 import AdminEvents from "./AdminComponents/AdminEvents";
 import AdminUsers from "./AdminComponents/AdminUsers";
 import AdminReports from "./AdminComponents/AdminReports";
@@ -21,11 +20,11 @@ const PrivateRoute = ({ children }) => {
   return children;
 };
 
-// --- STAFF-ONLY ROUTES ---
+// --- STAFF ROUTE ---
 const StaffRoute = ({ children }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user) return <Navigate to="/login" replace />;
-  if (!user.isStaff) return <Navigate to="/LandingPage" replace />;
+  if (!user.isStaff) return <Navigate to="/" replace />;
   return children;
 };
 
@@ -33,21 +32,22 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* PUBLIC ROUTES */}
+        {/* Landing page accessible to all */}
+        <Route path="/" element={<LandingPage />} />
+
+        {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* USER LANDING PAGE */}
+        {/* Private routes */}
         <Route
-          path="/LandingPage"
+          path="/landingpage"
           element={
             <PrivateRoute>
               <LandingPage />
             </PrivateRoute>
           }
         />
-
-        {/* USER PROFILE */}
         <Route
           path="/profile"
           element={
@@ -56,46 +56,42 @@ function App() {
             </PrivateRoute>
           }
         />
-
         <Route
-  path="/events/:id"
-  element={
-    <PrivateRoute>
-      <EventDetails />
-    </PrivateRoute>
-  }
-/>
+          path="/events/:id"
+          element={
+            <PrivateRoute>
+              <EventDetails />
+            </PrivateRoute>
+          }
+        />
 
-        {/* --- ADMIN ROUTES --- */}
+        {/* Admin routes */}
         <Route
-          path="/AdminDashboard"
+          path="/admindashboard"
           element={
             <StaffRoute>
               <AdminDashboard />
             </StaffRoute>
           }
         />
-
         <Route
-          path="/AdminEvents"
+          path="/adminevents"
           element={
             <StaffRoute>
               <AdminEvents />
             </StaffRoute>
           }
         />
-
         <Route
-          path="/AdminUsers"
+          path="/adminusers"
           element={
             <StaffRoute>
               <AdminUsers />
             </StaffRoute>
           }
         />
-
         <Route
-          path="/AdminReports"
+          path="/adminreports"
           element={
             <StaffRoute>
               <AdminReports />
@@ -103,8 +99,8 @@ function App() {
           }
         />
 
-        {/* DEFAULT FALLBACK */}
-        <Route path="*" element={<Navigate to="/LandingPage" replace />} />
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );

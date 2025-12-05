@@ -1,56 +1,91 @@
 // src/AdminComponents/DataTable.jsx
 import React from "react";
-import "../CCSS/AdminDashboard.css";
+import "../CCSS/AdminDashboard.css"; // Styling for table and eventDesc
 
 const DataTable = ({ data, columns, onEdit, onDelete }) => {
   return (
-    <table className="admin-table">
-      <thead>
-        <tr>
-          {columns.map((col, i) => (
-            <th key={i}>{col.toUpperCase()}</th>
-          ))}
-          {(onEdit || onDelete) && <th>ACTIONS</th>}
-        </tr>
-      </thead>
+    <div className="datatable-wrapper">
+      <div className="datatable-scroll">
+        <table className="datatable">
+          <thead>
+            <tr>
+              {columns.map((col, i) => (
+                <th key={i}>
+                  {col.replace(/([A-Z])/g, " $1").toUpperCase()}
+                </th>
+              ))}
+              {(onEdit || onDelete) && <th>ACTIONS</th>}
+            </tr>
+          </thead>
 
-      <tbody>
-        {data.map((row) => (
-          <tr key={row.id}>
-            {columns.map((col, i) => {
-              if (col === "imageUrl") {
-                return (
-                  <td key={i}>
-                    {row[col] ? (
-                      <img
-                        src={row[col]}
-                        alt={row.eventName}
-                        style={{
-                          width: "80px",
-                          height: "50px",
-                          objectFit: "cover",
-                          borderRadius: "4px",
-                        }}
-                      />
-                    ) : (
-                      "No Image"
-                    )}
-                  </td>
-                );
-              }
-              return <td key={i}>{row[col]}</td>;
-            })}
+          <tbody>
+            {data.length === 0 ? (
+              <tr>
+                <td colSpan={columns.length + 1} className="no-data">
+                  No events available
+                </td>
+              </tr>
+            ) : (
+              data.map((row) => (
+                <tr key={row.id}>
+                  {columns.map((col, i) => {
+                    // Image column
+                    if (col === "imageUrl") {
+                      return (
+                        <td key={i}>
+                          {row[col] ? (
+                            <img
+                              src={row[col]}
+                              alt={row.eventName || "Event Image"}
+                              className="datatable-image"
+                            />
+                          ) : (
+                            <span>No Image</span>
+                          )}
+                        </td>
+                      );
+                    }
 
-            {(onEdit || onDelete) && (
-              <td>
-                {onEdit && <button className="edit-btn" onClick={() => onEdit(row)}>Edit</button>}
-                {onDelete && <button className="delete-btn" onClick={() => onDelete(row.id)}>Delete</button>}
-              </td>
+                    // Event description with boundary and wrapping
+                    if (col === "eventDesc") {
+                      return (
+                        <td key={i} className="eventdesc">
+                          {row[col]}
+                        </td>
+                      );
+                    }
+
+                    // Other columns
+                    return <td key={i}>{row[col]}</td>;
+                  })}
+
+                  {(onEdit || onDelete) && (
+                    <td className="action-buttons">
+                      {onEdit && (
+                        <button
+                          className="edit-btn"
+                          onClick={() => onEdit(row)}
+                        >
+                          Edit
+                        </button>
+                      )}
+                      {onDelete && (
+                        <button
+                          className="delete-btn"
+                          onClick={() => onDelete(row.id)}
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </td>
+                  )}
+                </tr>
+              ))
             )}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 };
 

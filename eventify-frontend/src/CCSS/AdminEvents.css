@@ -1,18 +1,4 @@
-/* --- Global Reset & Variables (from AdminDashboard.css) --- */
-:root {
-  --primary-color: #4a90e2; /* Blue for primary actions/accents */
-  --secondary-color: #f7a738; /* Orange/Yellow for secondary actions */
-  --background-color: #f4f7f6; /* Light grey background */
-  --card-background: #ffffff; /* White card background */
-  --text-color-dark: #333333;
-  --text-color-light: #555555;
-  --sidebar-width: 250px;
-  --topbar-height: 60px;
-  --box-shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --box-shadow-hover: 0 6px 10px rgba(0, 0, 0, 0.15);
-  --border-color: #e0e0e0; /* Light border for tables/inputs */
-}
-
+/* ===================== GLOBAL STYLES ===================== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -25,9 +11,7 @@ body {
   color: var(--text-color-dark);
 }
 
-/* -------------------------------------- */
-/* --- 1. Main Layout Container Styles (Used by AdminDashboard & AdminEvents) --- */
-/* -------------------------------------- */
+/* ===================== 1. MAIN LAYOUT ===================== */
 .admin-container {
   display: flex;
   min-height: 100vh;
@@ -39,7 +23,7 @@ body {
   transition: padding-left 0.3s ease;
 }
 
-/* Assuming Topbar has class .topbar-container */
+/* Topbar */
 .topbar-container {
   height: var(--topbar-height);
   background-color: var(--card-background);
@@ -53,135 +37,154 @@ body {
   z-index: 10;
 }
 
-/* -------------------------------------- */
-/* --- 2. AdminEvents Specific Layout and Button Styles --- */
-/* -------------------------------------- */
-
+/* ===================== 2. ADMIN EVENTS PAGE ===================== */
 .admin-events-content {
-    /* Main padding for the event management page */
-    padding: 30px; 
+  padding: 30px;
 }
 
 .admin-events-content h2 {
-    font-size: 1.8em;
-    color: var(--text-color-dark);
-    margin-bottom: 20px;
-    font-weight: 600;
+  font-size: 1.8em;
+  font-weight: 600;
+  color: var(--text-color-dark);
+  margin-bottom: 20px;
 }
 
-/* --- Add Event Button --- */
+/* Add Event Button */
 .add-btn {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 1em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.1s ease;
-    margin-bottom: 25px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    display: inline-block; /* Changed to inline-block for flexibility */
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 25px;
+  background-color: var(--primary-color);
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
 }
 
 .add-btn:hover {
-    background-color: #3b73c2; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #3b73c2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .add-btn:active {
-    transform: scale(0.98);
+  transform: scale(0.98);
 }
 
-
-/* -------------------------------------- */
-/* --- 3. DataTable Component Styles (DataTable.jsx) --- */
-/* -------------------------------------- */
-
-/* Container around the actual table */
+/* ===================== 3. DATA TABLE ===================== */
 .data-table-container {
-    background-color: var(--card-background);
-    border-radius: 12px;
-    box-shadow: var(--box-shadow-light);
-    padding: 20px;
-    overflow-x: auto; 
+  background-color: var(--card-background);
+  border-radius: 12px;
+  box-shadow: var(--box-shadow-light);
+  padding: 20px;
+  overflow-x: auto; /* Horizontal scroll */
 }
 
-/* Main Table Styling */
 .data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 1em;
-    min-width: 600px; /* Ensures a minimum width for readability */
+  width: 100%;
+  min-width: 800px; /* Adjust based on columns */
+  border-collapse: collapse;
+  font-size: 1em;
 }
 
-/* Table Header Styles */
 .data-table thead {
-    background-color: #f8f9fa; /* Very light grey header background */
-    border-bottom: 2px solid var(--border-color);
+  background-color: #f8f9fa;
+  border-bottom: 2px solid var(--border-color);
 }
 
 .data-table th {
-    text-align: left;
-    padding: 15px 20px;
-    font-weight: 600;
-    color: var(--text-color-light);
-    text-transform: uppercase;
-    font-size: 0.9em;
+  text-align: left;
+  padding: 15px 20px;
+  font-weight: 600;
+  color: var(--text-color-light);
+  text-transform: uppercase;
+  font-size: 0.9em;
 }
 
-/* Table Row and Data Cell Styles */
 .data-table tbody tr {
-    border-bottom: 1px solid var(--border-color);
-    transition: background-color 0.3s ease;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease;
 }
 
 .data-table tbody tr:hover {
-    background-color: #fafafa; /* Subtle highlight on row hover */
+  background-color: #fafafa;
 }
 
 .data-table td {
-    padding: 15px 20px;
-    color: var(--text-color-dark);
+  padding: 15px 20px;
+  color: var(--text-color-dark);
 }
 
-/* Action Buttons within the Table */
+/* Event Description Column - 20-character boundary */
+.data-table td.eventdesc,
+.data-table th.eventdesc {
+  max-width: 20ch;          /* Approx 20 characters per line */
+  white-space: normal;      /* Wrap text */
+  word-break: break-word;   /* Break long words */
+  overflow-wrap: break-word;
+  line-height: 1.4em;
+}
+
+/* Action Buttons */
 .action-buttons button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-left: 10px;
-    padding: 5px;
-    font-size: 0.9em;
-    transition: color 0.2s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  padding: 5px;
+  font-size: 0.9em;
+  transition: color 0.2s ease;
 }
 
 .action-buttons .edit-btn {
-    color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .action-buttons .delete-btn {
-    color: #dc3545; /* Red for delete */
+  color: #dc3545;
 }
 
 .action-buttons button:hover {
-    color: var(--secondary-color);
+  color: var(--secondary-color);
 }
 
-/* -------------------------------------- */
-/* --- 4. Responsive Adjustments --- */
-/* -------------------------------------- */
+/* ===================== 4. RESPONSIVE ===================== */
 @media (max-width: 768px) {
   .admin-container {
-    flex-direction: column; 
+    flex-direction: column;
   }
 
   .admin-content {
-    padding-left: 0; 
+    padding-left: 0;
   }
 
   .admin-events-content {
-      padding: 15px;
+    padding: 20px;
   }
+
+  .data-table {
+    min-width: 100%;
+  }
+
+  .data-table td.eventdesc,
+  .data-table th.eventdesc {
+    max-width: 100%; /* Full width on small screens */
+  }
+}
+
+/* ===================== 5. HORIZONTAL SCROLLBAR ===================== */
+.data-table-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.data-table-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.data-table-container::-webkit-scrollbar-track {
+  background: transparent;
 }

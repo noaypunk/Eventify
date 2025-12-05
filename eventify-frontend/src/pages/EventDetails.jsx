@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../EventCSS/EventDetails.css";
+import "../CCSS/EventDetails.css";
 import arrowIcon from "../assets/images/arrow.png";
 import logo from "../assets/images/red-carpet.png";
 
@@ -10,7 +10,7 @@ export default function EventDetails() {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user")); // get logged-in user
+  const user = JSON.parse(localStorage.getItem("user"));
 
   // Fetch event details
   useEffect(() => {
@@ -23,15 +23,12 @@ export default function EventDetails() {
   if (!event) return <p>Loading...</p>;
 
   const baseURL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8080";
-
   const eventImage = event.eventImage?.startsWith("http")
     ? event.eventImage
     : `${baseURL}${event.eventImage}`;
 
-  // Navbar logout
   const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to log out?");
-    if (confirmLogout) {
+    if (window.confirm("Are you sure you want to log out?")) {
       localStorage.removeItem("user");
       localStorage.removeItem("userId");
       navigate("/login");
@@ -40,7 +37,7 @@ export default function EventDetails() {
 
   return (
     <div className="event-details">
-      {/* === Navbar === */}
+      {/* Navbar */}
       <header className="navbar">
         <div className="navbar-left">
           <img
@@ -52,7 +49,6 @@ export default function EventDetails() {
           <span className="navbar-site-name" onClick={() => navigate("/")}>
             Eventify
           </span>
-
           {user?.isStaff && (
             <button
               className="navbar-admin-button-left"
@@ -72,7 +68,6 @@ export default function EventDetails() {
               >
                 {user.fname}
               </span>
-
               <button className="navbar-logout-button" onClick={handleLogout}>
                 Logout
               </button>
@@ -85,26 +80,49 @@ export default function EventDetails() {
         </div>
       </header>
 
-      {/* === Back Button === */}
+      {/* Back Button */}
       <button className="back-button" onClick={() => navigate(-1)}>
         <img src={arrowIcon} alt="Back" className="back-icon" />
       </button>
 
-      {/* === Event Details === */}
-      <img
-        src={eventImage}
-        alt={event.eventName}
-        className="event-main-image"
-        onError={(e) => (e.target.src = "/placeholder.png")}
-      />
+      {/* Event Container */}
+      <div className="event-content-wrapper" style={{ maxWidth: "1000px", margin: "30px auto" }}>
+        {/* Event Image */}
+        <img
+          src={eventImage || "/placeholder.png"}
+          alt={event.eventName}
+          className="event-main-image"
+          onError={(e) => (e.target.src = "/placeholder.png")}
+        />
 
-      <h2>{event.eventName}</h2>
-      <p className="event-desc">{event.eventDesc}</p>
+        {/* Event Info */}
+        <div className="event-info-section" style={{ marginTop: "30px", display: "flex", flexDirection: "column", gap: "20px" }}>
+          <h2>{event.eventName}</h2>
+          <p className="event-desc">{event.eventDesc}</p>
 
-      <p><strong>📅 Date:</strong> {event.eventDate}</p>
-      <p><strong>🕕 Time:</strong> {event.eventTime}</p>
-      <p><strong>📍 Location:</strong> {event.eventLoc}</p>
-      <p><strong>👤 Organizer:</strong> {event.eventOrganizer}</p>
+          <p>
+            <strong>📅 Date:</strong> {event.eventDate}
+          </p>
+          <p>
+            <strong>🕕 Time:</strong> {event.eventTime}
+          </p>
+          <p>
+            <strong>📍 Location:</strong> {event.eventLoc}
+          </p>
+          <p>
+            <strong>👤 Organizer:</strong> {event.eventOrganizer}
+          </p>
+          {/* Register Button */}
+            <div className="event-register-button-wrapper">
+              <button
+              className="register-button"
+              onClick={() => alert("Register clicked!")}
+              >
+              Proceed To Payment
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

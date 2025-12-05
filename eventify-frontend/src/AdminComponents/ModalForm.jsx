@@ -59,9 +59,10 @@ const ModalForm = ({ title, fields, defaultValues = {}, onSubmit, onClose }) => 
         ))}
 
         <div className="modal-buttons">
-          <button onClick={handleSave}>Save</button>
-          <button className="cancel" onClick={onClose}>Cancel</button>
+          <button className="confirm-btn" onClick={handleSave}>Save</button>
+          <button className="cancel-btn" onClick={onClose}>Cancel</button>
         </div>
+
       </div>
     </div>
   );

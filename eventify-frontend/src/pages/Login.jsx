@@ -15,11 +15,14 @@ const Login = () => {
   const [message, setMessage] = useState("");
   const [msgType, setMsgType] = useState(""); // "success" or "error"
 
+  /* ================= HANDLE INPUT CHANGE ================= */
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
+  /* ================= HANDLE LOGIN ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const response = await axios.post(
         "http://localhost:8080/api/auth/login",
@@ -27,16 +30,17 @@ const Login = () => {
       );
       const user = response.data;
 
-      // Store user info in localStorage
+      // Save user info in localStorage
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("userId", user.userID);
 
       setMsgType("success");
       setMessage("Login successful!");
 
+      // Navigate to landing page after login
       setTimeout(() => {
-        navigate("/", { replace: true }); // everyone goes to LandingPage
-      }, 1000);
+        navigate("/", { replace: true }); // now goes to main landing page
+      }, 800);
     } catch (error) {
       console.error(error);
       setMsgType("error");
@@ -44,23 +48,34 @@ const Login = () => {
     }
   };
 
+  /* ================= HANDLE HOME ICON ================= */
+  const handleHomeClick = () => {
+    // Clear session (if any)
+    localStorage.removeItem("user");
+    localStorage.removeItem("userId");
+    navigate("/"); // go to landing page
+  };
+
   return (
     <div className="split-container">
+      {/* LEFT IMAGE PANEL */}
       <div
         className="image-panel"
         style={{ backgroundImage: `url(${loginBG})` }}
       ></div>
 
+      {/* RIGHT FORM PANEL */}
       <div className="form-panel">
+        {/* HOME ICON */}
         <img
           src={homeIcon}
           alt="Home"
           className="home-icon"
-          onClick={() => navigate("/")}
+          onClick={handleHomeClick}
         />
 
         <h2>WELCOME</h2>
-        <p className="subheading">Login with email</p>
+        <p className="subheading">Login with your email</p>
 
         {message && <div className={`login-message ${msgType}`}>{message}</div>}
 
@@ -76,6 +91,7 @@ const Login = () => {
               required
             />
           </div>
+
           <div className="input-group">
             <img src={lockIcon} alt="password" />
             <input
@@ -87,6 +103,7 @@ const Login = () => {
               required
             />
           </div>
+
           <button type="submit" className="button">
             Login
           </button>

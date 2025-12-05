@@ -43,7 +43,7 @@ body {
 /* --- 2. Admin Content Area (Excludes Sidebar) --- */
 .admin-content {
   flex-grow: 1;
-  margin-left: var(--sidebar-width);
+  margin-left: 5px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -150,15 +150,6 @@ body {
   font-weight: 600;
 }
 
-/* --- 7. DataTable Container --- */
-.data-table-container {
-  background-color: var(--card-background);
-  border-radius: 12px;
-  box-shadow: var(--box-shadow-light);
-  padding: 20px;
-  overflow-x: auto;
-  margin-top: 20px;
-}
 
 /* --- 8. Sidebar Component Styles --- */
 .sidebar {
@@ -225,181 +216,583 @@ body {
   border-left-color: #ff6b6b;
 }
 
-/* --- 9. DataTable Specific Styles --- */
-.admin-table {
+/* ===================== DataTable.css ===================== */
+
+/* Wrapper around table for spacing */
+.datatable-wrapper {
   width: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+/* Horizontal scroll container */
+.datatable-scroll {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Horizontal scrollbar styling */
+.datatable-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.datatable-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.datatable-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Table styling */
+.datatable {
+  width: 100%;
+  min-width: 800px; /* Adjust based on columns */
   border-collapse: collapse;
-  font-size: 1em;
-  min-width: 650px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.admin-table thead {
+.datatable th,
+.datatable td {
+  padding: 14px 20px;
+  text-align: center;
+  font-size: 0.95em;
+}
+
+.datatable th {
   background-color: #f8f9fa;
-  border-bottom: 2px solid var(--border-color);
-}
-
-.admin-table th {
-  text-align: left;
-  padding: 15px 20px;
   font-weight: 600;
-  color: var(--text-color-light);
+  color: #555;
   text-transform: uppercase;
-  font-size: 0.9em;
   letter-spacing: 0.5px;
 }
 
+/* Table rows */
+.datatable tbody tr {
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.datatable tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Event Description Column - wraps at ~20 characters */
+.eventdesc {
+  max-width: 20ch;       /* approx 20 letters per line */
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.4em;
+  text-align: left;
+}
+
+/* Image styling */
+.datatable-image {
+  width: 80px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Action buttons */
+.action-buttons button {
+  margin: 0 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85em;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.edit-btn {
+  border-color: #4a90e2;
+  color: #4a90e2;
+  background-color: transparent;
+}
+
+.edit-btn:hover {
+  background-color: #4a90e2;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(74, 144, 226, 0.2);
+}
+
+.delete-btn {
+  border-color: #dc3545;
+  color: #dc3545;
+  background-color: transparent;
+}
+
+.delete-btn:hover {
+  background-color: #dc3545;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(220, 53, 69, 0.2);
+}
+
+/* No data row */
+.no-data {
+  text-align: center;
+  color: #999;
+  padding: 20px 0;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 1024px) {
+  .datatable th,
+  .datatable td {
+    padding: 12px 10px;
+    font-size: 0.85em;
+  }
+
+  .datatable-image {
+    width: 60px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .datatable {
+    min-width: 500px;
+  }
+
+  .action-buttons button {
+    padding: 4px 8px;
+    font-size: 0.75em;
+  }
+
+  .eventdesc {
+    max-width: 100%; /* full width on small screens */
+  }
+}
+/* --- Modern DataTable Styles --- */
+.admin-table-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* center the table horizontally */
+  padding: 0 20px; /* equal gaps on left & right */
+  box-sizing: border-box;
+  overflow-x: auto; /* horizontal scroll if table too wide */
+}
+
+.admin-table {
+  width: 100%;
+  max-width: 1200px; /* optional: limit table width */
+  border-collapse: separate;
+  border-spacing: 0 8px; /* space between rows for card-like look */
+  font-size: 1em;
+  background-color: transparent;
+  text-align: center; /* center text in cells */
+}
+
+
+.admin-table thead {
+  background-color: #f0f4f8;
+  border-bottom: none;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.admin-table th {
+  padding: 14px 16px;
+  font-weight: 600;
+  color: var(--text-color-light);
+  text-transform: uppercase;
+  font-size: 0.85em;
+  letter-spacing: 0.5px;
+  text-align: center; /* center header text */
+}
+
 .admin-table tbody tr {
-  border-bottom: 1px solid var(--border-color);
-  transition: background-color 0.3s ease;
+  background-color: var(--card-background);
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .admin-table tbody tr:hover {
-  background-color: #fafafa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .admin-table td {
-  padding: 15px 20px;
+  padding: 14px 16px;
   color: var(--text-color-dark);
   max-width: 250px;
   overflow: hidden;
   text-overflow: ellipsis;
+  vertical-align: middle;
+  white-space: normal; /* allow multiline text */
+  text-align: center; /* center cell content */
+}
+
+.admin-table td img {
+  width: 80px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  display: block;
+  margin: 0 auto; /* center images */
 }
 
 .admin-table td:last-child {
   white-space: nowrap;
 }
 
-.admin-table button {
+/* Action buttons */
+.admin-table td button {
   background: none;
   border: none;
-  cursor: pointer;
-  margin-right: 15px;
-  padding: 8px 12px;
+  padding: 8px 14px;
   font-size: 0.9em;
   font-weight: 600;
-  border-radius: 6px;
-  transition: all 0.2s ease;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin: 0 4px; /* spacing between buttons */
 }
 
-.admin-table .edit-btn {
+.admin-table td button.edit-btn {
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
-  cursor: pointer;
 }
 
-.admin-table .edit-btn:hover {
+.admin-table td button.edit-btn:hover {
   background-color: var(--primary-color);
-  color: white;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
 }
 
-.admin-table .delete-btn {
+.admin-table td button.delete-btn {
   color: #dc3545;
   border: 1px solid #dc3545;
-  cursor: pointer;
 }
 
-.admin-table .delete-btn:hover {
+.admin-table td button.delete-btn:hover {
   background-color: #dc3545;
-  color: white;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
 }
 
-/* --- 10. ModalForm Component Styles --- */
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .admin-table th,
+  .admin-table td {
+    padding: 12px 10px;
+    font-size: 0.85em;
+  }
+
+  .admin-table td img {
+    width: 60px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-table {
+    min-width: 600px;
+  }
+
+  .admin-table td button {
+    padding: 6px 10px;
+    font-size: 0.8em;
+  }
+}
+
+
+/* ============================
+   MODAL - REBUILT FROM SCRATCH
+   ============================ */
+
+/* Dark overlay */
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* ensures spacing on mobile */
+  z-index: 2000;
+  backdrop-filter: blur(3px);
+}
+
+/* Modal container */
+.modal {
+  background: var(--card-background);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;           /* <--- KEY FIX */
+  overflow-y: auto;           /* <--- SCROLLABLE INSIDE */
+  padding: 28px 32px;
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  animation: modalFade 0.25s ease-out;
+}
+
+/* Smooth fade + scale animation */
+@keyframes modalFade {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Header */
+.modal h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-color-dark);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Inputs */
+.modal input,
+.modal select,
+.modal textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  resize: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Focus state */
+.modal input:focus,
+.modal select:focus,
+.modal textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.25);
+}
+
+/* Buttons container */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Confirm button */
+.modal .confirm-btn {
+  background: var(--primary-color);
+  color: white;
+  padding: 12px 22px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.modal .confirm-btn:hover {
+  background-color: #3b73c2;
+}
+
+/* Cancel button */
+.modal .cancel-btn {
+  background: white;
+  color: var(--text-color-dark);
+  border: 1px solid var(--border-color);
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.modal .cancel-btn:hover {
+  background-color: #f5f5f5;
+}
+
+/* Mobile optimization */
+@media (max-width: 480px) {
+  .modal {
+    max-width: 95%;
+    padding: 22px;
+  }
+
+  .modal h2 {
+    font-size: 1.2rem;
+  }
+}
+
+/* ============================================
+   MODERN MODAL OVERLAY + CONTAINER
+   ============================================ */
+
 .modal-bg {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
   z-index: 2000;
 }
 
+/* Main modal container */
 .modal {
-  background-color: var(--card-background);
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-  width: 90%;
-  max-width: 450px;
+  background: var(--card-background);
+  width: 95%;
+  max-width: 520px;
+  max-height: 90vh; /* prevents overflow */
+  padding: 28px;
+  border-radius: 18px;
+  overflow-y: auto; /* vertical scroll */
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  animation: modalFadeIn 0.25s ease;
   display: flex;
   flex-direction: column;
-  transform: scale(0.95);
-  opacity: 0;
-  animation: modal-in 0.3s forwards cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-@keyframes modal-in {
+/* Smooth pop-in animation */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
   to {
-    transform: scale(1);
     opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
+/* ============================================
+   HEADER
+   ============================================ */
+
 .modal h2 {
-  font-size: 1.5em;
+  font-size: 1.45rem;
+  font-weight: 700;
   color: var(--text-color-dark);
-  margin-bottom: 25px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
   border-bottom: 2px solid var(--border-color);
-  padding-bottom: 10px;
-  font-weight: 600;
 }
+
+/* ============================================
+   FORM INPUTS (modernized)
+   ============================================ */
 
 .modal input,
 .modal select,
 .modal textarea {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
   border: 1px solid var(--border-color);
-  border-radius: 6px;
-  font-size: 1em;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 10px;
+  background: #fafafa;
+  font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
 .modal input:focus,
 .modal select:focus,
 .modal textarea:focus {
   border-color: var(--primary-color);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.25);
   outline: none;
-  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 }
 
-.modal button:not(.cancel) {
-  background-color: var(--primary-color);
-  color: white;
+/* ============================================
+   BUTTON WRAPPER
+   ============================================ */
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+/* ============================================
+   SAVE BUTTON (Modern Primary)
+   ============================================ */
+
+.modal .confirm-btn {
+  background: linear-gradient(135deg, var(--primary-color), #4a8be0);
+  color: #fff;
+  padding: 12px 30px;
   border: none;
-  padding: 12px 20px;
-  border-radius: 6px;
-  font-size: 1em;
-  font-weight: 600;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  margin-top: 10px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 14px rgba(74, 144, 226, 0.35);
+  transition: all 0.25s ease;
 }
 
-.modal button:not(.cancel):hover {
-  background-color: #3b73c2;
+.modal .confirm-btn:hover {
+  background: linear-gradient(135deg, #3b73c2, #4a90e2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.45);
 }
 
-.modal .cancel {
-  background: none;
+.modal .confirm-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(74, 144, 226, 0.35);
+}
+
+/* ============================================
+   CANCEL BUTTON (Glassy Minimal)
+   ============================================ */
+
+.modal .cancel-btn {
+  background: rgba(255, 255, 255, 0.65);
   color: var(--text-color-light);
+  padding: 12px 26px;
+  border-radius: 10px;
   border: 1px solid var(--border-color);
-  padding: 12px 20px;
-  border-radius: 6px;
-  font-size: 1em;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  margin-top: 10px;
+  backdrop-filter: blur(6px);
+  transition: all 0.25s ease;
 }
 
-.modal .cancel:hover {
-  background-color: #f0f0f0;
+.modal .cancel-btn:hover {
+  background: rgba(245, 245, 245, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
+
+.modal .cancel-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
 
 /* --- 11. Filter Controls (AdminReports) --- */
 .filter-controls {
