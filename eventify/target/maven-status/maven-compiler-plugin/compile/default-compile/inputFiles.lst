@@ -1,8 +1,11 @@
+C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\Controller\PaymentController.java
 C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\entity\PaymentEntity\payment.java
 C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\service\UserService.java
 C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\dto\LoginRequest.java
 C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\Repository\TicketRepository.java
 C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\Controller\UserController.java
+C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\dto\PaymentRequest.java
+C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\Repository\PaymentRepository.java
 C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\Controller\AuthController.java
 C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\Controller\EventController.java
 C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\Repository\UserRepository.java
@@ -14,5 +17,6 @@ C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\t
 C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\entity\EventEntity\event.java
 C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\service\EventService.java
 C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\Repository\EventRepository.java
+C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\service\PaymentService.java
 C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\Controller\TestController.java
 C:\Users\Che\OneDrive\Desktop\VS Code shit\Eventify\eventify\src\main\java\com\teampura\eventify\entity\UserEntity\User.java

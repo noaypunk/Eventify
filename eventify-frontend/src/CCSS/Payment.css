@@ -1,0 +1,145 @@
+.payment-page {
+  position: relative;
+  max-width: 1000px;
+  margin: 120px auto 40px;
+  padding: 32px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+.payment-title {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 24px;
+  color: #2c3e50;
+}
+
+.payment-form label {
+  display: block;
+  margin-top: 16px;
+  font-weight: bold;
+}
+
+.payment-form input,
+.payment-form select {
+  width: 30%;
+  padding: 10px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.privacy-policy {
+  margin-top: 24px;
+  font-size: 14px;
+  color: #555;
+  text-align: center; /* center paragraph text */
+}
+
+.privacy-policy .consent-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 21px; /* tighter spacing between checkbox and text */
+  margin-top: 12px;
+  white-space: nowrap; /* force text to stay on one line */
+  font-weight: bold;
+}
+
+.privacy-policy label {
+  display: inline-flex;       /* horizontal layout */
+  align-items: center;        /* vertical alignment */
+  gap: 6px;                   /* tight spacing between checkbox and text */
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+.privacy-policy input[type="checkbox"] {
+  margin: 0;                  /* remove default spacing */
+  transform: scale(1.1);      /* optional: slightly enlarge checkbox for better visibility */
+}
+
+.submit-buttons {
+  margin-top: 24px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.submit-buttons button {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #4B6FB3;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.submit-buttons button:hover {
+  background-color: #3498db;
+}
+
+.back-button {
+  position: absolute;   /* absolute inside payment-page */
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+
+.back-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.back-button:hover .back-icon {
+  transform: scale(1.1);
+}
+
+.name-row {
+  display: flex;
+  gap: 20px; /* spacing between inputs */
+  justify-content: space-between;
+}
+
+.name-row .form-group {
+  flex: 1; /* each takes equal width */
+}
+
+.name-row input {
+  width: 100%; /* full width inside its flex item */
+}
+
+.contact-row {
+  display: flex;
+  gap: 10px; /* spacing between inputs */
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.contact-row .form-group {
+  flex: 1; /* each takes equal width */
+}
+
+.contact-row input,
+.contact-row select {
+  width: 100%; /* full width inside its flex item */
+}
+
+.price-field {
+  display: inline-block;
+  padding: 10px;
+  width: 100%;
+  margin-top: 5px;
+}

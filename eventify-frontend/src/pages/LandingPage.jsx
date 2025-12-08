@@ -22,16 +22,24 @@ export default function LandingPage() {
     axios
       .get("http://localhost:8080/api/events")
       .then((res) => {
-        const formatted = res.data.map((ev) => ({
-          id: ev.eventID,
-          eventName: ev.eventName,
-          eventDesc: ev.eventDesc,
-          eventLoc: ev.eventLoc,
-          eventDate: ev.eventDate,
-          eventTime: ev.eventTime,
-          eventOrganizer: ev.eventOrganizer,
-          imageUrl: ev.eventImage || "",
-          price: ev.price || "Free",
+      const formatted = res.data.map((ev) => ({
+        id: ev.eventID,
+        eventName: ev.eventName,
+        eventDesc: ev.eventDesc,
+        eventLoc: ev.eventLoc,
+        eventDate: ev.eventDate,
+        eventTime: ev.eventTime,
+        eventOrganizer: ev.eventOrganizer,
+        imageUrl: ev.eventImage || "",
+  
+        // ⬇⬇ PRICE FIXED HERE
+        price:
+          ev.eventPrice === null ||
+          ev.eventPrice === undefined ||
+          ev.eventPrice === 0
+            ? "Free"
+            : `₱${ev.eventPrice}`,
+
           category: ev.category || "",
         }));
         setEvents(formatted);

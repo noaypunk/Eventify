@@ -6,6 +6,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import EventDetails from "./pages/EventDetails";
+import Payment from "./pages/Payment"; // ✅ import your Payment page
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 // ADMIN PAGES
 import AdminDashboard from "./pages/AdminDashboard";
@@ -98,6 +100,25 @@ function App() {
             </StaffRoute>
           }
         />
+
+        <Route
+  path="/payment/:id"
+  element={
+    <PrivateRoute>
+      <Payment />
+    </PrivateRoute>
+  }
+/>
+
+
+<Route
+  path="/payment-success"
+  element={
+    <PrivateRoute>
+      <PaymentSuccess />
+    </PrivateRoute>
+  }
+/>
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />

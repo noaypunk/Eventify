@@ -37,6 +37,10 @@ public class event {
     @Column(name = "event_image") // matches the DB column we'll create
     private String eventImage;
 
+    @Column(name = "event_price")
+    private Double eventPrice;   // Use Double for numeric values
+
+
     // Getters and Setters
     public Long getEventID() { return eventID; }
     public void setEventID(Long eventID) { this.eventID = eventID; }
@@ -61,4 +65,9 @@ public class event {
 
     public String getEventImage() { return eventImage; }
     public void setEventImage(String eventImage) { this.eventImage = eventImage; }
+
+    public Double getEventPrice() { return eventPrice; }
+
+    public void setEventPrice(Double eventPrice) { this.eventPrice = eventPrice; }
+
 }

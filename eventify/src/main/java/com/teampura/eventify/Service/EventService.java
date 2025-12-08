@@ -31,19 +31,24 @@ public class EventService {
         return eventRepository.findById(eventID);
     }
 
-    // UPDATE (includes eventImage)
-    public event updateEvent(Long eventID, event updatedEvent) {
-        return eventRepository.findById(eventID).map(existing -> {
-            existing.setEventName(updatedEvent.getEventName());
-            existing.setEventDesc(updatedEvent.getEventDesc());
-            existing.setEventLoc(updatedEvent.getEventLoc());
-            existing.setEventDate(updatedEvent.getEventDate());
-            existing.setEventTime(updatedEvent.getEventTime());
-            existing.setEventOrganizer(updatedEvent.getEventOrganizer());
-            existing.setEventImage(updatedEvent.getEventImage()); // update image URL
-            return eventRepository.save(existing);
-        }).orElse(null);
-    }
+    // UPDATE (includes eventImage and price)
+public event updateEvent(Long eventID, event updatedEvent) {
+    return eventRepository.findById(eventID).map(existing -> {
+        existing.setEventName(updatedEvent.getEventName());
+        existing.setEventDesc(updatedEvent.getEventDesc());
+        existing.setEventLoc(updatedEvent.getEventLoc());
+        existing.setEventDate(updatedEvent.getEventDate());
+        existing.setEventTime(updatedEvent.getEventTime());
+        existing.setEventOrganizer(updatedEvent.getEventOrganizer());
+        existing.setEventImage(updatedEvent.getEventImage()); // update image URL
+
+        // ✅ Update price as well
+        existing.setEventPrice(updatedEvent.getEventPrice());
+
+        return eventRepository.save(existing);
+    }).orElse(null);
+}
+
 
     // DELETE
     public void deleteEvent(Long eventID) {

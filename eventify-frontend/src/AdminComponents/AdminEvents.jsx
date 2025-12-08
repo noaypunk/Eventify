@@ -1,4 +1,3 @@
-// src/AdminComponents/AdminEvents.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import DataTable from "./DataTable";
@@ -40,7 +39,6 @@ const AdminEvents = () => {
     { name: "Reports", path: "/AdminReports" },
   ];
 
-  // FETCH EVENTS
   const fetchEvents = async () => {
     try {
       const res = await fetch(apiUrl);
@@ -55,6 +53,7 @@ const AdminEvents = () => {
         eventTime: ev.eventTime,
         eventOrganizer: ev.eventOrganizer,
         imageUrl: ev.eventImage || "",
+        eventPrice: ev.eventPrice ?? 0,
       }));
       setEvents(formatted);
     } catch (err) {
@@ -62,7 +61,6 @@ const AdminEvents = () => {
     }
   };
 
-  // SAVE EVENT
   const handleSave = async (data) => {
     const payload = {
       eventName: data.eventName,
@@ -72,6 +70,7 @@ const AdminEvents = () => {
       eventTime: data.eventTime,
       eventOrganizer: data.eventOrganizer,
       eventImage: data.eventImage || "",
+      eventPrice: Number(data.eventPrice) || 0,
     };
 
     const url = editEvent ? `${apiUrl}/${editEvent.id}` : apiUrl;
@@ -84,17 +83,20 @@ const AdminEvents = () => {
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error("Failed to save event");
+
+      // Auto-refresh table immediately after save
       fetchEvents();
+
       alert(editEvent ? "Event updated!" : "Event created!");
     } catch (err) {
       console.error(err);
     }
 
+    // Close modal and reset edit state
     setModalOpen(false);
     setEditEvent(null);
   };
 
-  // DELETE EVENT
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this event?")) return;
     try {
@@ -109,7 +111,6 @@ const AdminEvents = () => {
 
   return (
     <div className="admin-container">
-      {/* Sidebar */}
       <div className="sidebar">
         <h2>Welcome, {adminName}</h2>
         <ul>
@@ -122,17 +123,26 @@ const AdminEvents = () => {
               {item.name}
             </li>
           ))}
-          <li onClick={handleLogout} style={{ cursor: "pointer", color: "red" }}
-          className="logout-btn">Logout</li>
+          <li
+            onClick={handleLogout}
+            style={{ cursor: "pointer", color: "red" }}
+            className="logout-btn"
+          >
+            Logout
+          </li>
         </ul>
       </div>
 
-      {/* Main Content */}
       <div className="admin-content">
         <div className="admin-events-content">
           <h2>Manage Events</h2>
-
-          <button className="add-btn" onClick={() => { setModalOpen(true); setEditEvent(null); }}>
+          <button
+            className="add-btn"
+            onClick={() => {
+              setModalOpen(true);
+              setEditEvent(null);
+            }}
+          >
             + Add Event
           </button>
 
@@ -140,10 +150,19 @@ const AdminEvents = () => {
             <DataTable
               data={events}
               columns={[
-                "eventName", "eventDesc", "eventDate",
-                "eventTime", "eventLoc", "eventOrganizer", "imageUrl"
+                "eventName",
+                "eventDesc",
+                "eventDate",
+                "eventTime",
+                "eventLoc",
+                "eventOrganizer",
+                "eventPrice",
+                "imageUrl",
               ]}
-              onEdit={(row) => { setEditEvent(row); setModalOpen(true); }}
+              onEdit={(row) => {
+                setEditEvent(row);
+                setModalOpen(true);
+              }}
               onDelete={handleDelete}
             />
           </div>
@@ -152,7 +171,16 @@ const AdminEvents = () => {
             <ModalForm
               title={editEvent ? "Edit Event" : "Add Event"}
               defaultValues={editEvent || {}}
-              fields={["eventName","eventDesc","eventDate","eventTime","eventLoc","eventOrganizer","eventImage"]}
+              fields={[
+                "eventName",
+                "eventDesc",
+                "eventDate",
+                "eventTime",
+                "eventLoc",
+                "eventOrganizer",
+                "eventPrice",
+                "eventImage",
+              ]}
               onSubmit={handleSave}
               onClose={() => setModalOpen(false)}
             />

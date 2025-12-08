@@ -1,6 +1,6 @@
 // src/AdminComponents/DataTable.jsx
 import React from "react";
-import "../CCSS/AdminDashboard.css"; // Styling for table and eventDesc
+import "../CCSS/AdminDashboard.css";
 
 const DataTable = ({ data, columns, onEdit, onDelete }) => {
   return (
@@ -17,7 +17,6 @@ const DataTable = ({ data, columns, onEdit, onDelete }) => {
               {(onEdit || onDelete) && <th>ACTIONS</th>}
             </tr>
           </thead>
-
           <tbody>
             {data.length === 0 ? (
               <tr>
@@ -29,7 +28,6 @@ const DataTable = ({ data, columns, onEdit, onDelete }) => {
               data.map((row) => (
                 <tr key={row.id}>
                   {columns.map((col, i) => {
-                    // Image column
                     if (col === "imageUrl") {
                       return (
                         <td key={i}>
@@ -45,37 +43,25 @@ const DataTable = ({ data, columns, onEdit, onDelete }) => {
                         </td>
                       );
                     }
-
-                    // Event description with boundary and wrapping
                     if (col === "eventDesc") {
+                      return <td key={i} className="eventdesc">{row[col]}</td>;
+                    }
+                    if (col === "eventPrice") {
                       return (
-                        <td key={i} className="eventdesc">
-                          {row[col]}
+                        <td key={i}>
+                          {row[col] === 0 ? "Free" : `₱${row[col]}`}
                         </td>
                       );
                     }
-
-                    // Other columns
                     return <td key={i}>{row[col]}</td>;
                   })}
-
                   {(onEdit || onDelete) && (
                     <td className="action-buttons">
                       {onEdit && (
-                        <button
-                          className="edit-btn"
-                          onClick={() => onEdit(row)}
-                        >
-                          Edit
-                        </button>
+                        <button className="edit-btn" onClick={() => onEdit(row)}>Edit</button>
                       )}
                       {onDelete && (
-                        <button
-                          className="delete-btn"
-                          onClick={() => onDelete(row.id)}
-                        >
-                          Delete
-                        </button>
+                        <button className="delete-btn" onClick={() => onDelete(row.id)}>Delete</button>
                       )}
                     </td>
                   )}

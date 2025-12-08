@@ -5,25 +5,34 @@ import "../CCSS/AdminDashboard.css";
 const ModalForm = ({ title, fields, defaultValues = {}, onSubmit, onClose }) => {
   const [formData, setFormData] = useState({});
 
-  // Initialize formData when defaultValues change (important for editing)
   useEffect(() => {
     const initialData = fields.reduce((acc, field) => {
-      acc[field] = defaultValues[field] || ""; // preserve current image URL
+      acc[field] = defaultValues[field] ?? "";
       return acc;
     }, {});
     setFormData(initialData);
   }, [defaultValues, fields]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    let value = e.target.value;
+    if (e.target.name === "eventPrice") {
+      // Allow only numbers
+      if (!/^\d*\.?\d*$/.test(value)) return;
+    }
+    setFormData({ ...formData, [e.target.name]: value });
   };
 
   const handleSave = () => {
-    // Validate image URL if provided
+    // Convert empty price to 0
+    if (!formData.eventPrice) formData.eventPrice = 0;
+    else formData.eventPrice = Number(formData.eventPrice);
+
+    // Validate image URL
     if (formData.eventImage && !formData.eventImage.startsWith("http")) {
       alert("Please enter a valid image URL starting with http/https.");
       return;
     }
+
     onSubmit(formData);
   };
 
@@ -31,6 +40,7 @@ const ModalForm = ({ title, fields, defaultValues = {}, onSubmit, onClose }) => 
     if (field.toLowerCase().includes("date")) return "date";
     if (field.toLowerCase().includes("time")) return "time";
     if (field.toLowerCase().includes("image")) return "url";
+    if (field.toLowerCase() === "eventprice") return "number";
     return "text";
   };
 
@@ -44,7 +54,6 @@ const ModalForm = ({ title, fields, defaultValues = {}, onSubmit, onClose }) => 
     <div className="modal-bg">
       <div className="modal">
         <h2>{title}</h2>
-
         {fields.map((field, i) => (
           <div key={i} className="form-group">
             <label>{getLabel(field)}</label>
@@ -52,17 +61,15 @@ const ModalForm = ({ title, fields, defaultValues = {}, onSubmit, onClose }) => 
               type={getInputType(field)}
               name={field}
               value={formData[field]}
-              placeholder={field.toLowerCase().includes("image") ? "Enter image URL" : ""}
+              placeholder={field === "eventImage" ? "Enter image URL" : field === "eventPrice" ? "0 = Free" : ""}
               onChange={handleChange}
             />
           </div>
         ))}
-
         <div className="modal-buttons">
           <button className="confirm-btn" onClick={handleSave}>Save</button>
           <button className="cancel-btn" onClick={onClose}>Cancel</button>
         </div>
-
       </div>
     </div>
   );
